@@ -54,7 +54,7 @@ def is_game_over(current_board):
     else:
         return 0
 
-
+#TODO Testing
 if __name__ == '__main__':
     board = new_board()
     print("Game Starts!")
