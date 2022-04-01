@@ -1,0 +1,19 @@
+
+- Welcome Message
+- Draw Board
+
+#Loop till check_game_over(board)
+- Ask for User Input
+- Draw Board
+if check_game_over(board)   -> break
+- Ask other User for Input
+- Draw Board
+
+Show result
+
+----------------------
+check_game_over() if three neighbouring fields are marked with the same color or board full
+        check_board_full() ?
+draw_board()
+get_move()
+
