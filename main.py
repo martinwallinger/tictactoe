@@ -71,7 +71,7 @@ if __name__ == '__main__':
         if is_game_over(board) == 0:
             print("Player Two")
             player = 'O'
-            board = save_move(ai.random_ai(board, player), player, board)
+            board = save_move(ai.find_winning_moves_ai(board, player), player, board)
             render(board)
         else:
             break
