@@ -17,11 +17,11 @@ def render(current_board):
     print("  ---------")
 
 
-def get_move():  # TODO ckeck if input are two numbers between 0 and 2, if not ask to repeat it
+def get_move():
     move = input("What is your next move?")
     move = move.strip()
-    while len(move) != 2:
-        move = input("Please repeat your input without whitespaces inbetween: ")
+    while len(move) != 2 or not move.isnumeric() or not 0 <= int(move[0]) <= 2 or not 0 <= int(move[1]) <= 2:
+        move = input("Please repeat your input as two numbers without whitespaces inbetween: ")
         move.strip()
     return int(move[0]), int(move[1])
 
