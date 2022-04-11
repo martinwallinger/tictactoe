@@ -30,9 +30,9 @@ def save_move(move, current_player, current_board):
     while current_board[move[0]][move[1]] != " ":
         print("Square ", move, " is already taken! Pick another one!")
         move = get_move()
-    if current_player == 1:
+    if current_player == 'X':
         current_board[move[0]][move[1]] = "X"
-    if current_player == 2:
+    if current_player == 'O':
         current_board[move[0]][move[1]] = "O"
     return current_board
 
@@ -64,14 +64,14 @@ if __name__ == '__main__':
     print("Game Starts!")
     render(board)
     while is_game_over(board) == 0:
-        player = 1
+        player = 'X'
         print("Player One")
         board = save_move(get_move(), player, board)
         render(board)
         if is_game_over(board) == 0:
             print("Player Two")
-            player = 2
-            board = save_move(get_move(), player, board)
+            player = 'O'
+            board = save_move(ai.random_ai(board, player), player, board)
             render(board)
         else:
             break
