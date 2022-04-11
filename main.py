@@ -1,3 +1,6 @@
+import ai
+
+
 def new_board():
     return [
         [" ", " ", " "], [" ", " ", " "], [" ", " ", " "]
@@ -44,17 +47,18 @@ def is_game_over(current_board):
     for i in range(3):
         possible_lines[i + 5] = [current_board[0][i], current_board[1][i], current_board[2][i]]
     for i in range(len(possible_lines)):
-        empty += possible_lines[i].count(" ")
-        if possible_lines[i].count("X") == 3:
+        empty += possible_lines[i].count(' ')
+        if possible_lines[i].count('X') == 3:
             return 1
-        elif possible_lines[i].count("O") == 3:
+        elif possible_lines[i].count('O') == 3:
             return 2
     if empty == 0:
         return 3
     else:
         return 0
 
-#TODO Testing
+
+# TODO Testing
 if __name__ == '__main__':
     board = new_board()
     print("Game Starts!")
