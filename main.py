@@ -66,7 +66,7 @@ if __name__ == '__main__':
     while is_game_over(board) == 0:
         player = 'X'
         print("Player One")
-        board = save_move(get_move(), player, board)
+        board = save_move(ai.find_winning_moves_ai(board, player), player, board)
         render(board)
         if is_game_over(board) == 0:
             print("Player Two")
