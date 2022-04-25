@@ -12,7 +12,7 @@ def _find_legal_moves(curr_board):
 
     return legal_moves
 
-# TODO gegner wins vereiteln!
+
 def _find_winning_moves(curr_board, curr_player):
     opponent = get_opponent(curr_player)
     legal_moves = _find_legal_moves(curr_board)
@@ -23,52 +23,52 @@ def _find_winning_moves(curr_board, curr_player):
                     curr_board[legal_moves[i][0]][legal_moves[i][1] + 2] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i][1] == 1:
+        if legal_moves[i][1] == 1:
             if curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(opponent) and \
                     curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i][1] == 2:
+        if legal_moves[i][1] == 2:
             if curr_board[legal_moves[i][0]][legal_moves[i][1] - 2] == str(opponent) and \
                     curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(opponent):
                 return legal_moves[i]
         # draw horizontal
-        elif legal_moves[i][1] == 0:
+        if legal_moves[i][1] == 0:
             if curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(opponent) and \
                     curr_board[legal_moves[i][0] + 2][legal_moves[i][1]] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i][1] == 1:
+        if legal_moves[i][1] == 1:
             if curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(opponent) and \
                     curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i][1] == 2:
+        if legal_moves[i][1] == 2:
             if curr_board[legal_moves[i][0] - 2][legal_moves[i][1]] == str(opponent) and \
                     curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(opponent):
                 return legal_moves[i]
         # draw diagonal
-        elif legal_moves[i] == (0, 0):
+        if legal_moves[i] == (0, 0):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[2][2] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (1, 1):
+        if legal_moves[i] == (1, 1):
             if (curr_board[0][0] == str(opponent) and curr_board[2][2] == str(opponent)) \
                     or curr_board[2][0] == str(opponent) and curr_board[0][2] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (2, 2):
+        if legal_moves[i] == (2, 2):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[0][0] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (2, 0):
+        if legal_moves[i] == (2, 0):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[0][2] == str(opponent):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (0, 2):
+        if legal_moves[i] == (0, 2):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[2][0] == str(opponent):
                 return legal_moves[i]
@@ -83,47 +83,47 @@ def _find_winning_moves(curr_board, curr_player):
                     curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(curr_player):
                 return legal_moves[i]
 
-        elif legal_moves[i][1] == 2:
+        if legal_moves[i][1] == 2:
             if curr_board[legal_moves[i][0]][legal_moves[i][1] - 2] == str(curr_player) and \
                     curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(curr_player):
                 return legal_moves[i]
         # win horizontal
-        elif legal_moves[i][1] == 0:
+        if legal_moves[i][1] == 0:
             if curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(curr_player) and \
                     curr_board[legal_moves[i][0] + 2][legal_moves[i][1]] == str(curr_player):
                 return legal_moves[i]
 
-        elif legal_moves[i][1] == 1:
+        if legal_moves[i][1] == 1:
             if curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(curr_player) and \
                     curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(curr_player):
                 return legal_moves[i]
 
-        elif legal_moves[i][1] == 2:
+        if legal_moves[i][1] == 2:
             if curr_board[legal_moves[i][0] - 2][legal_moves[i][1]] == str(curr_player) and \
                     curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(curr_player):
                 return legal_moves[i]
         # win diagonal
-        elif legal_moves[i] == (0, 0):
+        if legal_moves[i] == (0, 0):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[2][2] == str(curr_player):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (1, 1):
+        if legal_moves[i] == (1, 1):
             if (curr_board[0][0] == str(curr_player) and curr_board[2][2] == str(curr_player)) \
                     or curr_board[2][0] == str(curr_player) and curr_board[0][2] == str(curr_player):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (2, 2):
+        if legal_moves[i] == (2, 2):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[0][0] == str(curr_player):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (2, 0):
+        if legal_moves[i] == (2, 0):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[0][2] == str(curr_player):
                 return legal_moves[i]
 
-        elif legal_moves[i] == (0, 2):
+        if legal_moves[i] == (0, 2):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[2][0] == str(curr_player):
                 return legal_moves[i]
@@ -184,12 +184,11 @@ def minmax_ai(curr_board, curr_player):
         _board = copy.deepcopy(curr_board)
         _make_move(curr_player, _board, move)
 
-        opp = get_opponent(curr_player)
-        score = _minmax_score(_board, opp, curr_player)
+        opponent = get_opponent(curr_player)
+        score = _minmax_score(_board, opponent, curr_player)
         if best_score is None or score > best_score:
             best_move = move
             best_score = score
-
     return best_move
 
 
