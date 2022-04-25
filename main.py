@@ -49,11 +49,11 @@ def is_game_over(current_board):
     for i in range(len(possible_lines)):
         empty += possible_lines[i].count(' ')
         if possible_lines[i].count('X') == 3:
-            return 1
+            return 'X'
         elif possible_lines[i].count('O') == 3:
-            return 2
+            return 'O'
     if empty == 0:
-        return 3
+        return 'draw'
     else:
         return 0
 
@@ -66,17 +66,20 @@ if __name__ == '__main__':
     while is_game_over(board) == 0:
         player = 'X'
         print("Player One")
-        board = save_move(ai.find_winning_moves_ai(board, player), player, board)
+        board = save_move(get_move(), player, board)
         render(board)
         if is_game_over(board) == 0:
             print("Player Two")
             player = 'O'
-            board = save_move(ai.find_winning_moves_ai(board, player), player, board)
+            board = save_move(ai.minmax_ai(board, player), player, board)
             render(board)
         else:
             break
-    status = is_game_over(board)
-    if status == 3:
+    if is_game_over(board) == 'draw':
         print("Game Over! It's a draw")
     else:
-        print("Game Over! Player", is_game_over(board), " has won!")
+        if is_game_over(board) == 'X':
+            winner = 1
+        else:
+            winner = 2
+        print('Game Over! Player {0} has won!'.format(winner))
