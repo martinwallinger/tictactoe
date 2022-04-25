@@ -12,11 +12,67 @@ def _find_legal_moves(curr_board):
 
     return legal_moves
 
-
-def _find_winning_moves_ai(curr_board, curr_player):
+# TODO gegner wins vereiteln!
+def _find_winning_moves(curr_board, curr_player):
+    opponent = get_opponent(curr_player)
     legal_moves = _find_legal_moves(curr_board)
     for i in range(len(legal_moves)):
-        # vertical
+        # draw vertical
+        if legal_moves[i][1] == 0:
+            if curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(opponent) and \
+                    curr_board[legal_moves[i][0]][legal_moves[i][1] + 2] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i][1] == 1:
+            if curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(opponent) and \
+                    curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i][1] == 2:
+            if curr_board[legal_moves[i][0]][legal_moves[i][1] - 2] == str(opponent) and \
+                    curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(opponent):
+                return legal_moves[i]
+        # draw horizontal
+        elif legal_moves[i][1] == 0:
+            if curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(opponent) and \
+                    curr_board[legal_moves[i][0] + 2][legal_moves[i][1]] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i][1] == 1:
+            if curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(opponent) and \
+                    curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i][1] == 2:
+            if curr_board[legal_moves[i][0] - 2][legal_moves[i][1]] == str(opponent) and \
+                    curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(opponent):
+                return legal_moves[i]
+        # draw diagonal
+        elif legal_moves[i] == (0, 0):
+            if curr_board[1][1] == str(opponent) and \
+                    curr_board[2][2] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i] == (1, 1):
+            if (curr_board[0][0] == str(opponent) and curr_board[2][2] == str(opponent)) \
+                    or curr_board[2][0] == str(opponent) and curr_board[0][2] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i] == (2, 2):
+            if curr_board[1][1] == str(opponent) and \
+                    curr_board[0][0] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i] == (2, 0):
+            if curr_board[1][1] == str(opponent) and \
+                    curr_board[0][2] == str(opponent):
+                return legal_moves[i]
+
+        elif legal_moves[i] == (0, 2):
+            if curr_board[1][1] == str(opponent) and \
+                    curr_board[2][0] == str(opponent):
+                return legal_moves[i]
+        # win vertical
         if legal_moves[i][1] == 0:
             if curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(curr_player) and \
                     curr_board[legal_moves[i][0]][legal_moves[i][1] + 2] == str(curr_player):
@@ -31,7 +87,7 @@ def _find_winning_moves_ai(curr_board, curr_player):
             if curr_board[legal_moves[i][0]][legal_moves[i][1] - 2] == str(curr_player) and \
                     curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(curr_player):
                 return legal_moves[i]
-        # horizontal
+        # win horizontal
         elif legal_moves[i][1] == 0:
             if curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(curr_player) and \
                     curr_board[legal_moves[i][0] + 2][legal_moves[i][1]] == str(curr_player):
@@ -46,7 +102,7 @@ def _find_winning_moves_ai(curr_board, curr_player):
             if curr_board[legal_moves[i][0] - 2][legal_moves[i][1]] == str(curr_player) and \
                     curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(curr_player):
                 return legal_moves[i]
-        # diagonal
+        # win diagonal
         elif legal_moves[i] == (0, 0):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[2][2] == str(curr_player):
