@@ -1,4 +1,3 @@
-import copy
 import random
 import main
 
@@ -130,11 +129,13 @@ def _find_winning_moves(curr_board, curr_player):
     return legal_moves[int(random.uniform(0, len(legal_moves)))]
 
 
-def _make_move(board, move, player):
-    if player == 'X':
+def _make_move(board, move, character):
+    if character == 'X':
         board[move[0]][move[1]] = "X"
-    if player == 'O':
+    if character == 'O':
         board[move[0]][move[1]] = "O"
+    if character == " ":
+        board[move[0]][move[1]] = " "
     return board
 
 
@@ -150,45 +151,57 @@ def _get_ids(curr_player):
     return [player_id, opponent, opponent_id]
 
 
-def _minmax_score(board, curr_player, player_to_optimize):
+def _minimax_score(board, player):
     winner = main.is_game_over(board)
-    if winner != 0:
-        if winner == player_to_optimize:
-            return 10
-        else:
-            return -10
+    if winner == 'X':
+        return 10
+    elif winner == 'O':
+        return -10
     elif winner == 'draw':
         return 0
 
-    legal_moves = _find_legal_moves(board)
+    if player == 'X':
+        best_score = -100
 
-    scores = []
-    for move in legal_moves:
-        _board = copy.deepcopy(board)
-        _make_move(_board, move, curr_player)
-        opponent = get_opponent(curr_player)
-        score = _minmax_score(_board, opponent, player_to_optimize)
-        scores.append(score)
-
-    if curr_player == player_to_optimize:
-        return max(scores)
+        for move in _find_legal_moves(board):
+            _make_move(board, move, 'X')
+            score = _minimax_score(board, 'O')
+            _make_move(board, move, " ")
+            if score > best_score:
+                best_score = score
+        return best_score
     else:
-        return min(scores)
+        best_score = 100
+
+        for move in _find_legal_moves(board):
+            _make_move(board, move, 'O')
+            score = _minimax_score(board, 'X')
+            _make_move(board, move, " ")
+            if score < best_score:
+                best_score = score
+        return best_score
 
 
-def minmax_ai(curr_board, curr_player):
+# X wants max / O wants min
+def minimax_ai(board, player):
+    if player == 'X':
+        best_score = -100
+    else:
+        best_score = 100
     best_move = None
-    best_score = None
 
-    for move in _find_legal_moves(curr_board):
-        _board = copy.deepcopy(curr_board)
-        _make_move(curr_player, _board, move)
-
-        opponent = get_opponent(curr_player)
-        score = _minmax_score(_board, opponent, curr_player)
-        if best_score is None or score > best_score:
-            best_move = move
-            best_score = score
+    for move in _find_legal_moves(board):
+        _make_move(board, move, player)
+        score = _minimax_score(board, get_opponent(player))
+        _make_move(board, move, " ")
+        if player == 'X':
+            if score > best_score:
+                best_score = score
+                best_move = move
+        if player == 'O':
+            if score < best_score:
+                best_score = score
+                best_move = move
     return best_move
 
 
