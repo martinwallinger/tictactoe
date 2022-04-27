@@ -39,7 +39,7 @@ def save_move(move, current_player, current_board):
 
 def is_game_over(current_board):
     empty = 0
-    possible_lines = [[None], [None], [None], [None], [None], [None], [None], [None]]
+    possible_lines = [[], [], [], [], [], [], [], []]
     possible_lines[0] = [current_board[0][2], current_board[1][1], current_board[2][0]]
     possible_lines[1] = [current_board[0][0], current_board[1][1], current_board[2][2]]
     for i in range(3):
