@@ -11,10 +11,10 @@ def _find_legal_moves(curr_board):
     :return: List of possible moves
     """
     legal_moves = []
-    for x in range(len(curr_board)):
-        for y in range(len(curr_board)):
-            if curr_board[x][y] == ' ':
-                legal_moves.append((x, y))
+    for x_coord in range(len(curr_board)):
+        for y_coord in range(len(curr_board)):
+            if curr_board[x_coord][y_coord] == ' ':
+                legal_moves.append((x_coord, y_coord))
 
     return legal_moves
 

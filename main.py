@@ -3,7 +3,9 @@ import ai
 
 
 def new_board():
-    """ returns new board"""
+    """
+    :return: empty list
+    """
     return [
         [" ", " ", " "], [" ", " ", " "], [" ", " ", " "]
 
@@ -11,7 +13,12 @@ def new_board():
 
 
 def render(curr_board):
-    """ prints the given board on the commandline """
+    """
+    prints the given board on the commandline.
+
+    :param curr_board: game-board to be printed
+    """
+
     print("   0  1  2")
     print("  ---------")
     print("0|" + curr_board[0][0] + " | " + curr_board[0][1] + " | " + curr_board[0][2] + "|")
@@ -21,7 +28,11 @@ def render(curr_board):
 
 
 def get_move():
-    """ asks human player for next move, checks if format of given input is right """
+    """
+    asks human player for next move, checks if format of given input is right.
+
+    :return: move the player has entered as tuple
+    """
     move = input("What is your next move?")
     move = move.strip()
     while len(move) != 2 or not move.isnumeric() or not 0 <= int(move[0]) <= 2 or\
@@ -33,7 +44,14 @@ def get_move():
 
 
 def save_move(move, current_player, current_board):
-    """ marks given move on the given board and returns it"""
+    """
+    adds given move on the given board.
+
+    :param move: where the character is to add
+    :param current_player: player-character which is to add
+    :param current_board: current game-board
+    :return: the new game-board
+    """
     while current_board[move[0]][move[1]] != " ":
         print("Square ", move, " is already taken! Pick another one!")
         move = get_move()
@@ -47,10 +65,10 @@ def save_move(move, current_player, current_board):
 def is_game_over(current_board):
     """
     checks if game is over
-    returns 'X' if X has won
-    returns 'O' if O has won
-    returns 'draw' if game is in a tied state
-    returns 0 if game is not over
+
+    :param current_board: current game-board
+    :return: 'X' if X has won, 'O' if O has won,
+    'draw' if game is in a tied state, 0 if game is not over
     """
     empty = 0
     possible_lines = [[], [], [], [], [], [], [], []]
@@ -91,7 +109,7 @@ if __name__ == '__main__':
         print("Game Over! It's a draw")
     else:
         if is_game_over(board) == 'X':
-            winner = 1
+            WINNER = 1
         else:
-            winner = 2
-        print('Game Over! Player {winner} has won!')
+            WINNER = 2
+        print(F'Game Over! Player {WINNER} has won!')
