@@ -12,120 +12,120 @@ def _find_legal_moves(curr_board):
     return legal_moves
 
 
-def _find_winning_moves(curr_board, curr_player):
+def find_winning_losing_moves(curr_board, curr_player):
     opponent = get_opponent(curr_player)
     legal_moves = _find_legal_moves(curr_board)
-    for i in range(len(legal_moves)):
+    for move in legal_moves:
         # draw vertical
-        if legal_moves[i][1] == 0:
-            if curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(opponent) and \
-                    curr_board[legal_moves[i][0]][legal_moves[i][1] + 2] == str(opponent):
-                return legal_moves[i]
+        if move[1] == 0:
+            if curr_board[move[0]][move[1] + 1] == str(opponent) and \
+                    curr_board[move[0]][move[1] + 2] == str(opponent):
+                return move
 
-        if legal_moves[i][1] == 1:
-            if curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(opponent) and \
-                    curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(opponent):
-                return legal_moves[i]
+        if move == 1:
+            if curr_board[move[0]][move[1] - 1] == str(opponent) and \
+                    curr_board[move[0]][move[1] + 1] == str(opponent):
+                return move
 
-        if legal_moves[i][1] == 2:
-            if curr_board[legal_moves[i][0]][legal_moves[i][1] - 2] == str(opponent) and \
-                    curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(opponent):
-                return legal_moves[i]
+        if move[1] == 2:
+            if curr_board[move[0]][move[1] - 2] == str(opponent) and \
+                    curr_board[move[0]][move[1] - 1] == str(opponent):
+                return move
         # draw horizontal
-        if legal_moves[i][1] == 0:
-            if curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(opponent) and \
-                    curr_board[legal_moves[i][0] + 2][legal_moves[i][1]] == str(opponent):
-                return legal_moves[i]
+        if move[1] == 0:
+            if curr_board[move[0]][move[1] + 1] == str(opponent) and \
+                    curr_board[move[0]][move[1] + 2] == str(opponent):
+                return move
 
-        if legal_moves[i][1] == 1:
-            if curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(opponent) and \
-                    curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(opponent):
-                return legal_moves[i]
+        if move[1] == 1:
+            if curr_board[move[0]][move[1] - 1] == str(opponent) and \
+                    curr_board[move[0]][move[1] + 1] == str(opponent):
+                return move
 
-        if legal_moves[i][1] == 2:
-            if curr_board[legal_moves[i][0] - 2][legal_moves[i][1]] == str(opponent) and \
-                    curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(opponent):
-                return legal_moves[i]
+        if move[1] == 2:
+            if curr_board[move[0]][move[1] - 2] == str(opponent) and \
+                    curr_board[move[0]][move[1] - 1] == str(opponent):
+                return move
         # draw diagonal
-        if legal_moves[i] == (0, 0):
+        if move == (0, 0):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[2][2] == str(opponent):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (1, 1):
+        if move == (1, 1):
             if (curr_board[0][0] == str(opponent) and curr_board[2][2] == str(opponent)) \
                     or curr_board[2][0] == str(opponent) and curr_board[0][2] == str(opponent):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (2, 2):
+        if move == (2, 2):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[0][0] == str(opponent):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (2, 0):
+        if move == (2, 0):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[0][2] == str(opponent):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (0, 2):
+        if move == (0, 2):
             if curr_board[1][1] == str(opponent) and \
                     curr_board[2][0] == str(opponent):
-                return legal_moves[i]
+                return move
         # win vertical
-        if legal_moves[i][1] == 0:
-            if curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(curr_player) and \
-                    curr_board[legal_moves[i][0]][legal_moves[i][1] + 2] == str(curr_player):
-                return legal_moves[i]
+        if move[1] == 0:
+            if curr_board[move[0]][move[1] + 1] == str(curr_player) and \
+                    curr_board[move[0]][move[1] + 2] == str(curr_player):
+                return move
 
-        elif legal_moves[i][1] == 1:
-            if curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(curr_player) and \
-                    curr_board[legal_moves[i][0]][legal_moves[i][1] + 1] == str(curr_player):
-                return legal_moves[i]
+        elif move[1] == 1:
+            if curr_board[move[0]][move[1] - 1] == str(curr_player) and \
+                    curr_board[move[0]][move[1] + 1] == str(curr_player):
+                return move
 
-        if legal_moves[i][1] == 2:
-            if curr_board[legal_moves[i][0]][legal_moves[i][1] - 2] == str(curr_player) and \
-                    curr_board[legal_moves[i][0]][legal_moves[i][1] - 1] == str(curr_player):
-                return legal_moves[i]
+        if move[1] == 2:
+            if curr_board[move[0]][move[1] - 2] == str(curr_player) and \
+                    curr_board[move[0]][move[1] - 1] == str(curr_player):
+                return move
         # win horizontal
-        if legal_moves[i][1] == 0:
-            if curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(curr_player) and \
-                    curr_board[legal_moves[i][0] + 2][legal_moves[i][1]] == str(curr_player):
-                return legal_moves[i]
+        if move[1] == 0:
+            if curr_board[move[0]][move[1] + 1] == str(curr_player) and \
+                    curr_board[move[0]][move[1] + 2] == str(curr_player):
+                return move
 
-        if legal_moves[i][1] == 1:
-            if curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(curr_player) and \
-                    curr_board[legal_moves[i][0] + 1][legal_moves[i][1]] == str(curr_player):
-                return legal_moves[i]
+        if move[1] == 1:
+            if curr_board[move[0]][move[1] - 1] == str(curr_player) and \
+                    curr_board[move[0]][move[1] + 1] == str(curr_player):
+                return move
 
-        if legal_moves[i][1] == 2:
-            if curr_board[legal_moves[i][0] - 2][legal_moves[i][1]] == str(curr_player) and \
-                    curr_board[legal_moves[i][0] - 1][legal_moves[i][1]] == str(curr_player):
-                return legal_moves[i]
+        if move[1] == 2:
+            if curr_board[move[0]][move[1] - 2] == str(curr_player) and \
+                    curr_board[move[0]][move[1] - 1] == str(curr_player):
+                return move
         # win diagonal
-        if legal_moves[i] == (0, 0):
+        if move == (0, 0):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[2][2] == str(curr_player):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (1, 1):
+        if move == (1, 1):
             if (curr_board[0][0] == str(curr_player) and curr_board[2][2] == str(curr_player)) \
                     or curr_board[2][0] == str(curr_player) and curr_board[0][2] == str(curr_player):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (2, 2):
+        if move == (2, 2):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[0][0] == str(curr_player):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (2, 0):
+        if move == (2, 0):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[0][2] == str(curr_player):
-                return legal_moves[i]
+                return move
 
-        if legal_moves[i] == (0, 2):
+        if move == (0, 2):
             if curr_board[1][1] == str(curr_player) and \
                     curr_board[2][0] == str(curr_player):
-                return legal_moves[i]
+                return move
     return legal_moves[int(random.uniform(0, len(legal_moves)))]
 
 

@@ -21,7 +21,7 @@ def get_move():
     move = input("What is your next move?")
     move = move.strip()
     while len(move) != 2 or not move.isnumeric() or not 0 <= int(move[0]) <= 2 or not 0 <= int(move[1]) <= 2:
-        move = input("Please repeat your input as two numbers without whitespaces inbetween: ")
+        move = input("Please repeat your move as two numbers (0 to 2) without whitespaces inbetween: ")
         move.strip()
     return int(move[0]), int(move[1])
 
@@ -66,12 +66,12 @@ if __name__ == '__main__':
     while is_game_over(board) == 0:
         player = 'X'
         print("Player One")
-        board = save_move(get_move(), player, board)
+        board = save_move(ai.minimax_ai(board, player), player, board)
         render(board)
         if is_game_over(board) == 0:
             print("Player Two")
             player = 'O'
-            board = save_move(ai.minimax_ai(board, player), player, board)
+            board = save_move(ai.find_winning_losing_moves(board, player), player, board)
             render(board)
         else:
             break
