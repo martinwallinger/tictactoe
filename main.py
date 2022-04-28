@@ -2,6 +2,36 @@
 import ai
 
 
+class Player:
+    """
+    instantiates a player with an game_mode attribute
+    """
+
+    def __init__(self, game_mode):
+        """
+        Constructor for the Player Class.
+
+        :param game_mode: 1 for human, 2 for find_winning_losing_moves-ai, 3 for minimax-ai
+        """
+        self.game_mode = game_mode
+
+    def play(self, curr_board, curr_player):
+        """
+        generic play method which calls upon the specified game mode.
+
+        :param curr_board: current game-board
+        :param curr_player: player which is to move
+        :return: move to make as tuple
+        """
+        if self.game_mode == 1:
+            return get_move()
+        if self.game_mode == 2:
+            return ai.find_winning_losing_moves(curr_board, curr_player)
+        if self.game_mode == 3:
+            return ai.minimax_ai(curr_board, curr_player)
+        raise ValueError("game mode is invalid")
+
+
 def new_board():
     """
     :return: empty list
@@ -35,7 +65,7 @@ def get_move():
     """
     move = input("What is your next move?")
     move = move.strip()
-    while len(move) != 2 or not move.isnumeric() or not 0 <= int(move[0]) <= 2 or\
+    while len(move) != 2 or not move.isnumeric() or not 0 <= int(move[0]) <= 2 or \
             not 0 <= int(move[1]) <= 2:
         move = input("Please repeat your move as two numbers (0 to 2)"
                      " without whitespaces inbetween: ")
@@ -89,27 +119,51 @@ def is_game_over(current_board):
     return 0
 
 
+# TODO time/memory profiling, speed up game-logic
+# TODO implement feature to save/load game state
+# TODO write report
 if __name__ == '__main__':
-    board = new_board()
-    print("Game Starts!")
-    render(board)
-    while is_game_over(board) == 0:
-        player = 'X'
-        print("Player One")
-        board = save_move(ai.find_winning_losing_moves(board, player), player, board)
+    running = True
+    while running:
+        board = new_board()
+
+        user_input = None
+        print("\n""Select Player 1")
+        while user_input not in ('1', '2', '3'):
+            user_input = input("type 1 for human, 2 for naive ai or 3 for perfect ai: ")
+        player1 = Player(int(user_input))
+
+        user_input = None
+        print("\nSelect Player 2")
+        while user_input not in ('1', '2', '3'):
+            user_input = input("type 1 for human, 2 for naive ai or 3 for perfect ai: ")
+        player2 = Player(int(user_input))
+
+        print("\nGame Starts!")
         render(board)
-        if is_game_over(board) == 0:
-            print("Player Two")
-            player = 'O'
-            board = save_move(ai.find_winning_losing_moves(board, player), player, board)
+        while is_game_over(board) == 0:
+            player = 'X'
+            print("\nPlayer One")
+            board = save_move(player1.play(board, player), player, board)
             render(board)
+            if is_game_over(board) == 0:
+                print("\nPlayer Two")
+                player = 'O'
+                board = save_move(player2.play(board, player), player, board)
+                render(board)
+            else:
+                break
+        if is_game_over(board) == 'draw':
+            print("Game Over! It's a draw")
         else:
-            break
-    if is_game_over(board) == 'draw':
-        print("Game Over! It's a draw")
-    else:
-        if is_game_over(board) == 'X':
-            WINNER = 1
+            if is_game_over(board) == 'X':
+                winner = 1
+            else:
+                winner = 2
+            print(F'\nGame Over! Player {winner} has won!')
+
+        if input("Want to play again? (type y/n): ") == "y":
+            running = True
         else:
-            WINNER = 2
-        print(F'Game Over! Player {WINNER} has won!')
+            running = False
+            print("\nshutting down...\n")
