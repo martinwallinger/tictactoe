@@ -17,29 +17,46 @@ class Player:
 
     def play(self, curr_board, curr_player):
         """
-        generic play method which calls upon the specified game mode.
+        generic play method which calls upon the specified game mode, saves and renders the board.
 
         :param curr_board: current game-board
         :param curr_player: player which is to move
-        :return: move to make as tuple
         """
+        if curr_player == 'X':
+            print("\nPlayer One")
+        else:
+            print("\nPlayer Two")
         if self.game_mode == 1:
-            return get_move()
-        if self.game_mode == 2:
-            return ai.find_winning_losing_moves(curr_board, curr_player)
-        if self.game_mode == 3:
-            return ai.minimax_ai(curr_board, curr_player)
-        raise ValueError("game mode is invalid")
+            move = get_move()
+        elif self.game_mode == 2:
+            move = ai.find_winning_losing_moves(curr_board, curr_player)
+        elif self.game_mode == 3:
+            move = ai.minimax_ai(curr_board, curr_player)
+        else:
+            raise ValueError("game mode is invalid")
+        save_move(move, curr_player, board)
+        render(board)
+
+
+def select_player(number):
+    """
+    asks the user what game-mode the specified Player should be in.
+
+    :param number: Player Number (1 or 2)
+    :return: Key of the chosen game-mode (1, 2 or 3)
+    """
+    user_input = None
+    print("\n""Select Player ", number)
+    while user_input not in ('1', '2', '3'):
+        user_input = input("type 1 for human, 2 for naive ai or 3 for perfect ai: ")
+    return int(user_input)
 
 
 def new_board():
     """
     :return: empty list
     """
-    return [
-        [" ", " ", " "], [" ", " ", " "], [" ", " ", " "]
-
-    ]
+    return [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
 
 
 def render(curr_board):
@@ -51,9 +68,9 @@ def render(curr_board):
 
     print("   0  1  2")
     print("  ---------")
-    print("0|" + curr_board[0][0] + " | " + curr_board[0][1] + " | " + curr_board[0][2] + "|")
-    print("1|" + curr_board[1][0] + " | " + curr_board[1][1] + " | " + curr_board[1][2] + "|")
-    print("2|" + curr_board[2][0] + " | " + curr_board[2][1] + " | " + curr_board[2][2] + "|")
+    print(F"0| {curr_board[0][0]}| {curr_board[0][1]}| {curr_board[0][2]}|")
+    print(F"1| {curr_board[1][0]}| {curr_board[1][1]}| {curr_board[1][2]}|")
+    print(F"2| {curr_board[2][0]}| {curr_board[2][1]}| {curr_board[2][2]}|")
     print("  ---------")
 
 
@@ -92,6 +109,8 @@ def save_move(move, current_player, current_board):
     return current_board
 
 
+# TODO bessere complexität möglich?
+# @lru_cache?
 def is_game_over(current_board):
     """
     checks if game is over
@@ -119,6 +138,17 @@ def is_game_over(current_board):
     return 0
 
 
+def output_winner(state):
+    if state == 'draw':
+        print("Game Over! It's a draw")
+    else:
+        if state == 'X':
+            winner = 1
+        else:
+            winner = 2
+        print(F'\nGame Over! Player {winner} has won!')
+
+
 # TODO time/memory profiling, speed up game-logic
 # TODO implement feature to save/load game state
 # TODO write report
@@ -126,41 +156,21 @@ if __name__ == '__main__':
     running = True
     while running:
         board = new_board()
-
-        user_input = None
-        print("\n""Select Player 1")
-        while user_input not in ('1', '2', '3'):
-            user_input = input("type 1 for human, 2 for naive ai or 3 for perfect ai: ")
-        player1 = Player(int(user_input))
-
-        user_input = None
-        print("\nSelect Player 2")
-        while user_input not in ('1', '2', '3'):
-            user_input = input("type 1 for human, 2 for naive ai or 3 for perfect ai: ")
-        player2 = Player(int(user_input))
+        player1 = Player(select_player(1))
+        player2 = Player(select_player(2))
 
         print("\nGame Starts!")
         render(board)
-        while is_game_over(board) == 0:
-            player = 'X'
-            print("\nPlayer One")
-            board = save_move(player1.play(board, player), player, board)
-            render(board)
-            if is_game_over(board) == 0:
-                print("\nPlayer Two")
-                player = 'O'
-                board = save_move(player2.play(board, player), player, board)
-                render(board)
-            else:
-                break
-        if is_game_over(board) == 'draw':
-            print("Game Over! It's a draw")
-        else:
-            if is_game_over(board) == 'X':
-                winner = 1
-            else:
-                winner = 2
-            print(F'\nGame Over! Player {winner} has won!')
+        game_state = 0
+
+        while game_state == 0:
+            player1.play(board, "X")
+            game_state = is_game_over(board)
+            if game_state == 0:
+                player2.play(board, "O")
+            game_state = is_game_over(board)
+
+        output_winner(game_state)
 
         if input("Want to play again? (type y/n): ") == "y":
             running = True
