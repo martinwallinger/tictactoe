@@ -46,7 +46,7 @@ def select_player(number):
     :return: Key of the chosen game-mode (1, 2 or 3)
     """
     user_input = None
-    print("\n""Select Player ", number)
+    print(F"\nSelect Player {number}")
     while user_input not in ('1', '2', '3'):
         user_input = input("type 1 for human, 2 for naive ai or 3 for perfect ai: ")
     return int(user_input)
@@ -100,7 +100,7 @@ def save_move(move, current_player, current_board):
     :return: the new game-board
     """
     while current_board[move[0]][move[1]] != " ":
-        print("Square ", move, " is already taken! Pick another one!")
+        print(F"Square {move} is already taken! Pick another one!")
         move = get_move()
     if current_player == 'X':
         current_board[move[0]][move[1]] = "X"
