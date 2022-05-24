@@ -1,5 +1,6 @@
 """imports the computer player"""
 import ai
+import save_game as sg
 
 
 class Player:
@@ -23,19 +24,22 @@ class Player:
         :param curr_player: player which is to move
         """
         if curr_player == 'X':
-            print("\nPlayer One")
+            print("\nPlayer One:\n")
         else:
-            print("\nPlayer Two")
+            print("\nPlayer Two:\n")
         if self.game_mode == 1:
             move = get_move()
+            if move == "save":
+                return False
         elif self.game_mode == 2:
             move = ai.find_winning_losing_moves(curr_board, curr_player)
         elif self.game_mode == 3:
             move = ai.minimax_ai(curr_board, curr_player)
         else:
             raise ValueError("game mode is invalid")
-        save_move(move, curr_player, board)
-        render(board)
+        save_move(move, curr_player, curr_board)
+        render(curr_board)
+        return True
 
 
 def select_player(number):
@@ -80,8 +84,11 @@ def get_move():
 
     :return: move the player has entered as tuple
     """
+    print("To save the current game state, enter 'save'")
     move = input("What is your next move?")
     move = move.strip()
+    if move == "save":
+        return move
     while len(move) != 2 or not move.isnumeric() or not 0 <= int(move[0]) <= 2 or \
             not 0 <= int(move[1]) <= 2:
         move = input("Please repeat your move as two numbers (0 to 2)"
@@ -149,31 +156,55 @@ def output_winner(state):
         print(F'\nGame Over! Player {winner} has won!')
 
 
-# TODO time/memory profiling, speed up game-logic
-# TODO implement feature to save/load game state
-# TODO write report
-if __name__ == '__main__':
+def run(board, player, game_mode1, game_mode2):
     running = True
     while running:
-        board = new_board()
-        player1 = Player(select_player(1))
-        player2 = Player(select_player(2))
+        if game_mode1 and game_mode2:
+            player1 = Player(game_mode1)
+            player2 = Player(game_mode2)
+        else:
+            player1 = Player(select_player(1))
+            player2 = Player(select_player(2))
 
         print("\nGame Starts!")
         render(board)
         game_state = 0
 
         while game_state == 0:
-            player1.play(board, "X")
-            game_state = is_game_over(board)
+
+            if player == 1:
+                running = player1.play(board, "X")
+                if running is False:
+                    curr_player = 1
+                    sg.save_game_state(board, curr_player, player1.game_mode, player2.game_mode)
+                    return
+                game_state = is_game_over(board)
+                player = 2
             if game_state == 0:
-                player2.play(board, "O")
-            game_state = is_game_over(board)
+
+                if player == 2:
+                    running = player2.play(board, "O")
+                    if running is False:
+                        curr_player = 2
+                        sg.save_game_state(board, curr_player, player1.game_mode, player2.game_mode)
+                        return
+                game_state = is_game_over(board)
+                player = 1
 
         output_winner(game_state)
 
-        if input("Want to play again? (type y/n): ") == "y":
-            running = True
+
+# TODO time/memory profiling, speed up game-logic
+# TODO write report
+if __name__ == '__main__':
+    while True:
+        if sg.is_game_loaded() is True and input("Do you want to continue the loaded game? (type y/n): ") == "y":
+            curr_board, curr_player, player1_game_mode, player2_game_mode = sg.load_game_state()
         else:
-            running = False
-            print("\nshutting down...\n")
+            print("\nPreparing a new game ... ")
+            curr_board = new_board()
+            curr_player = 1
+            player1_game_mode = 0
+            player2_game_mode = 0
+
+        run(curr_board, int(curr_player), int(player1_game_mode), int(player2_game_mode))
