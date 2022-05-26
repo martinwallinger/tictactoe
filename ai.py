@@ -28,7 +28,7 @@ def find_winning_losing_moves(curr_board, curr_player):
     :param curr_player: player which is to move
     :return: winning/drawing move or a random one if no hit found
     """
-    opponent = get_opponent(curr_player)
+    opponent = _get_opponent(curr_player)
     legal_moves = _find_legal_moves(curr_board)
 
     for move in legal_moves:
@@ -181,7 +181,7 @@ def minimax_ai(board, player):
 
     for move in _find_legal_moves(board):
         _make_move(board, move, player)
-        score = _minimax_score(board, get_opponent(player))
+        score = _minimax_score(board, _get_opponent(player))
         _make_move(board, move, " ")
         if player == 'X':
             if score > best_score:
@@ -194,7 +194,7 @@ def minimax_ai(board, player):
     return best_move
 
 
-def get_opponent(player):
+def _get_opponent(player):
     """
     :param player: the player of which the opponent is searched
     :return: X if player is O, O if player is X

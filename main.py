@@ -1,6 +1,7 @@
-"""imports the computer player"""
+"""imports the computer player, the save game and view methods"""
 import ai
 import save_game as sg
+import view
 
 
 class Player:
@@ -28,7 +29,7 @@ class Player:
         else:
             print("\nPlayer Two:\n")
         if self.game_mode == 1:
-            move = get_move()
+            move = view.get_move()
             if move == "save":
                 return False
         elif self.game_mode == 2:
@@ -38,22 +39,8 @@ class Player:
         else:
             raise ValueError("game mode is invalid")
         save_move(move, curr_player, curr_board)
-        render(curr_board)
+        view.render(curr_board)
         return True
-
-
-def select_player(number):
-    """
-    asks the user what game-mode the specified Player should be in.
-
-    :param number: Player Number (1 or 2)
-    :return: Key of the chosen game-mode (1, 2 or 3)
-    """
-    user_input = None
-    print(F"\nSelect Player {number}")
-    while user_input not in ('1', '2', '3'):
-        user_input = input("type 1 for human, 2 for naive ai or 3 for perfect ai: ")
-    return int(user_input)
 
 
 def new_board():
@@ -61,40 +48,6 @@ def new_board():
     :return: empty list
     """
     return [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]
-
-
-def render(curr_board):
-    """
-    prints the given board on the commandline.
-
-    :param curr_board: game-board to be printed
-    """
-
-    print("   0  1  2")
-    print("  ---------")
-    print(F"0| {curr_board[0][0]}| {curr_board[0][1]}| {curr_board[0][2]}|")
-    print(F"1| {curr_board[1][0]}| {curr_board[1][1]}| {curr_board[1][2]}|")
-    print(F"2| {curr_board[2][0]}| {curr_board[2][1]}| {curr_board[2][2]}|")
-    print("  ---------")
-
-
-def get_move():
-    """
-    asks human player for next move, checks if format of given input is right.
-
-    :return: move the player has entered as tuple
-    """
-    print("To save the current game state, enter 'save'")
-    move = input("What is your next move?")
-    move = move.strip()
-    if move == "save":
-        return move
-    while len(move) != 2 or not move.isnumeric() or not 0 <= int(move[0]) <= 2 or \
-            not 0 <= int(move[1]) <= 2:
-        move = input("Please repeat your move as two numbers (0 to 2)"
-                     " without whitespaces inbetween: ")
-        move.strip()
-    return int(move[0]), int(move[1])
 
 
 def save_move(move, current_player, current_board):
@@ -108,7 +61,7 @@ def save_move(move, current_player, current_board):
     """
     while current_board[move[0]][move[1]] != " ":
         print(F"Square {move} is already taken! Pick another one!")
-        move = get_move()
+        move = view.get_move()
     if current_player == 'X':
         current_board[move[0]][move[1]] = "X"
     if current_player == 'O':
@@ -145,22 +98,6 @@ def is_game_over(current_board):
     return 0
 
 
-def output_winner(state):
-    """
-    Prints the winner or "draw" on the commandline
-
-    :param state: 'draw', 'X' or 'O'
-    """
-    if state == 'draw':
-        print("Game Over! It's a draw")
-    else:
-        if state == 'X':
-            winner = 1
-        else:
-            winner = 2
-        print(F'\nGame Over! Player {winner} has won!')
-
-
 def run(curr_board, curr_player, game_mode1, game_mode2):
     """
     plays the game. instantiates the players, calls upon play to make a move.
@@ -178,11 +115,11 @@ def run(curr_board, curr_player, game_mode1, game_mode2):
             player2 = Player(game_mode2)
             print("\nGame Continues!")
         else:
-            player1 = Player(select_player(1))
-            player2 = Player(select_player(2))
+            player1 = Player(view.select_player(1))
+            player2 = Player(view.select_player(2))
             print("\nGame Starts!")
 
-        render(curr_board)
+        view.render(curr_board)
         game_state = 0
 
         while game_state == 0:
@@ -206,7 +143,7 @@ def run(curr_board, curr_player, game_mode1, game_mode2):
                 game_state = is_game_over(curr_board)
                 curr_player = 1
 
-        output_winner(game_state)
+        view.print_winner(game_state)
 
 
 def get_parameters():
@@ -223,7 +160,7 @@ def get_parameters():
 
 
 # TODO time/memory profiling, speed up game-logic
-# TODO write report
+
 if __name__ == '__main__':
     while True:
         run(*get_parameters())
