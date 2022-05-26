@@ -24,14 +24,17 @@ def is_game_saved():
 
     :return: True or False
     """
-    save_file = open("save_file.txt", "w+")  # access modifier -> creates file if it doesn't exist
-    char = save_file.read(1)
+    try:
+        save_file = open("save_file.txt", "r")
+    except FileNotFoundError:
+        open("save_file.txt", "x")  # creates save file if it doesn't exist
+        return False
+    content = save_file.readlines()
     save_file.close()
-    if char:
+    if content:
         return True
     else:
         return False
-
 
 
 def load_game_state():
