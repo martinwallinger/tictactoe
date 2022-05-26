@@ -1,4 +1,11 @@
-""" imports the main game-file and the random module """
+"""
+the computer-player of the tictactoe game.
+
+Functions:
+    find_winning_losing_moves(list, string) -> int
+    minimax_ai(list, string) -> int
+
+"""
 import random
 import main
 
@@ -19,7 +26,7 @@ def _find_legal_moves(curr_board):
     return legal_moves
 
 
-def find_winning_losing_moves(curr_board, curr_player):
+def find_winning_losing_moves(curr_board, curr_player=str):
     """
     an ai which can detect winning or drawing moves and plays them out.
     if none of these gets detected, a random move will be returned.
@@ -36,62 +43,62 @@ def find_winning_losing_moves(curr_board, curr_player):
 
         # vertical
         if move[0] == 0:
-            if curr_board[move[0] + 1][move[1]] == (str(opponent) or str(curr_player)) and \
-                    curr_board[move[0] + 2][move[1]] == (str(opponent) or str(curr_player)):
+            if curr_board[move[0] + 1][move[1]] == (opponent or curr_player) and \
+                    curr_board[move[0] + 2][move[1]] == (opponent or curr_player):
                 hit = True
 
         if move[0] == 1:
-            if curr_board[move[0] - 1][move[1]] == (str(opponent) or str(curr_player)) and \
-                    curr_board[move[0] + 1][move[1]] == (str(opponent) or str(curr_player)):
+            if curr_board[move[0] - 1][move[1]] == (opponent or curr_player) and \
+                    curr_board[move[0] + 1][move[1]] == (opponent or curr_player):
                 hit = True
 
         if move[0] == 2:
-            if curr_board[move[0] - 1][move[1]] == (str(opponent) or str(curr_player)) and \
-                    curr_board[move[0] - 2][move[1]] == (str(opponent) or str(curr_player)):
+            if curr_board[move[0] - 1][move[1]] == (opponent or curr_player) and \
+                    curr_board[move[0] - 2][move[1]] == (opponent or curr_player):
                 hit = True
 
         # horizontal
         if move[1] == 0:
-            if curr_board[move[0]][move[1] + 1] == (str(opponent) or str(curr_player)) and \
-                    curr_board[move[0]][move[1] + 2] == (str(opponent) or str(curr_player)):
+            if curr_board[move[0]][move[1] + 1] == (opponent or curr_player) and \
+                    curr_board[move[0]][move[1] + 2] == (opponent or curr_player):
                 hit = True
 
         if move[1] == 1:
-            if curr_board[move[0]][move[1] - 1] == (str(opponent) or str(curr_player)) and \
-                    curr_board[move[0]][move[1] + 1] == str(opponent):
+            if curr_board[move[0]][move[1] - 1] == (opponent or curr_player) and \
+                    curr_board[move[0]][move[1] + 1] == opponent:
                 hit = True
 
         if move[1] == 2:
-            if curr_board[move[0]][move[1] - 1] == (str(opponent) or str(curr_player)) and \
-                    curr_board[move[0]][move[1] - 2] == str(opponent):
+            if curr_board[move[0]][move[1] - 1] == (opponent or curr_player) and \
+                    curr_board[move[0]][move[1] - 2] == opponent:
                 hit = True
 
         # diagonal
         if move == (0, 0):
-            if curr_board[1][1] == (str(opponent) or str(curr_player)) and \
-                    curr_board[2][2] == str(opponent):
+            if curr_board[1][1] == (opponent or curr_player) and \
+                    curr_board[2][2] == opponent:
                 hit = True
 
         if move == (1, 1):
-            if (curr_board[0][0] == (str(opponent) or str(curr_player)) and
-                curr_board[2][2] == (str(opponent) or str(curr_player))) or \
-                    (curr_board[2][0] == (str(opponent) or str(curr_player)) and
-                     curr_board[0][2] == (str(opponent) or str(curr_player))):
+            if (curr_board[0][0] == (opponent or curr_player) and
+                curr_board[2][2] == (opponent or curr_player)) or \
+                    (curr_board[2][0] == (opponent or curr_player) and
+                     curr_board[0][2] == (opponent or curr_player)):
                 hit = True
 
         if move == (2, 2):
-            if curr_board[1][1] == (str(opponent) or str(curr_player)) and \
-                    curr_board[0][0] == (str(opponent) or str(curr_player)):
+            if curr_board[1][1] == (opponent or curr_player) and \
+                    curr_board[0][0] == (opponent or curr_player):
                 hit = True
 
         if move == (2, 0):
-            if curr_board[1][1] == (str(opponent) or str(curr_player)) and \
-                    curr_board[0][2] == (str(opponent) or str(curr_player)):
+            if curr_board[1][1] == (opponent or curr_player) and \
+                    curr_board[0][2] == (opponent or curr_player):
                 hit = True
 
         if move == (0, 2):
-            if curr_board[1][1] == (str(opponent) or str(curr_player)) and \
-                    curr_board[2][0] == (str(opponent) or str(curr_player)):
+            if curr_board[1][1] == (opponent or curr_player) and \
+                    curr_board[2][0] == (opponent or curr_player):
                 hit = True
 
         if hit:

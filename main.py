@@ -1,4 +1,16 @@
-"""imports the computer player, the save game and view methods"""
+"""
+main file of tictactoe game.
+
+Classes:
+    Player
+
+Functions:
+    new_board() -> list
+    save_move(int, string, list) -> list
+    is_game_over(list) -> string or int
+    run(list, int, int, int)
+    get_parameters() -> (list, int, int, int)
+"""
 import ai
 import save_game as sg
 import view
@@ -69,8 +81,6 @@ def save_move(move, current_player, current_board):
     return current_board
 
 
-# TODO bessere complexität möglich?
-# @lru_cache?
 def is_game_over(current_board):
     """
     checks if game is over
@@ -128,7 +138,8 @@ def run(curr_board, curr_player, game_mode1, game_mode2):
                 running = player1.play(curr_board, "X")
                 if running is False:
                     curr_player = 1
-                    sg.save_game_state(curr_board, curr_player, player1.game_mode, player2.game_mode)
+                    sg.save_game_state(curr_board, curr_player, player1.game_mode,
+                                       player2.game_mode)
                     return
                 game_state = is_game_over(curr_board)
                 curr_player = 2
@@ -138,12 +149,14 @@ def run(curr_board, curr_player, game_mode1, game_mode2):
                     running = player2.play(curr_board, "O")
                     if running is False:
                         curr_player = 2
-                        sg.save_game_state(curr_board, curr_player, player1.game_mode, player2.game_mode)
+                        sg.save_game_state(curr_board, curr_player, player1.game_mode,
+                                           player2.game_mode)
                         return
                 game_state = is_game_over(curr_board)
                 curr_player = 1
 
         view.print_winner(game_state)
+        return
 
 
 def get_parameters():
@@ -154,12 +167,10 @@ def get_parameters():
     """
     if sg.is_game_saved() and input("Do you want to load the saved game? (type y/n): ") == "y":
         return sg.load_game_state()
-    else:
-        print("\nPreparing a new game ... ")
-        return new_board(), 1, 0, 0
 
+    print("\nPreparing a new game ... ")
+    return new_board(), 1, 0, 0
 
-# TODO time/memory profiling, speed up game-logic
 
 if __name__ == '__main__':
     while True:

@@ -1,3 +1,14 @@
+"""
+the view part of the tictactoe game.
+
+Functions:
+    render(list)
+    select_player(int) -> int
+    get_move() -> (int, int) or string
+    print_winner(string)
+"""
+
+
 def render(curr_board):
     """
     prints the given board on the commandline.
