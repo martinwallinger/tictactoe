@@ -20,17 +20,18 @@ def save_game_state(curr_board, curr_player, player1_game_mode, player2_game_mod
 
 def is_game_saved():
     """
-    checks if a game is saved
+    checks if a game is saved in save_file.txt, creates it if it doesn't exists
 
     :return: True or False
     """
-    save_file = open("save_file.txt", "r")
+    save_file = open("save_file.txt", "w+")  # access modifier -> creates file if it doesn't exist
     char = save_file.read(1)
     save_file.close()
     if char:
         return True
     else:
         return False
+
 
 
 def load_game_state():
