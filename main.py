@@ -146,6 +146,11 @@ def is_game_over(current_board):
 
 
 def output_winner(state):
+    """
+    Prints the winner or "draw" on the commandline
+
+    :param state: 'draw', 'X' or 'O'
+    """
     if state == 'draw':
         print("Game Over! It's a draw")
     else:
@@ -156,55 +161,69 @@ def output_winner(state):
         print(F'\nGame Over! Player {winner} has won!')
 
 
-def run(board, player, game_mode1, game_mode2):
+def run(curr_board, curr_player, game_mode1, game_mode2):
+    """
+    plays the game. instantiates the players, calls upon play to make a move.
+    active as long the game is running. stops if game over or game has been saved.
+
+    :param curr_board: current game-board
+    :param curr_player: player which moves first
+    :param game_mode1: the game mode of X
+    :param game_mode2: the game mode of O
+    """
     running = True
     while running:
         if game_mode1 and game_mode2:
             player1 = Player(game_mode1)
             player2 = Player(game_mode2)
+            print("\nGame Continues!")
         else:
             player1 = Player(select_player(1))
             player2 = Player(select_player(2))
+            print("\nGame Starts!")
 
-        print("\nGame Starts!")
-        render(board)
+        render(curr_board)
         game_state = 0
 
         while game_state == 0:
 
-            if player == 1:
-                running = player1.play(board, "X")
+            if curr_player == 1:
+                running = player1.play(curr_board, "X")
                 if running is False:
                     curr_player = 1
-                    sg.save_game_state(board, curr_player, player1.game_mode, player2.game_mode)
+                    sg.save_game_state(curr_board, curr_player, player1.game_mode, player2.game_mode)
                     return
-                game_state = is_game_over(board)
-                player = 2
+                game_state = is_game_over(curr_board)
+                curr_player = 2
             if game_state == 0:
 
-                if player == 2:
-                    running = player2.play(board, "O")
+                if curr_player == 2:
+                    running = player2.play(curr_board, "O")
                     if running is False:
                         curr_player = 2
-                        sg.save_game_state(board, curr_player, player1.game_mode, player2.game_mode)
+                        sg.save_game_state(curr_board, curr_player, player1.game_mode, player2.game_mode)
                         return
-                game_state = is_game_over(board)
-                player = 1
+                game_state = is_game_over(curr_board)
+                curr_player = 1
 
         output_winner(game_state)
+
+
+def get_parameters():
+    """
+    gets the parameters either from the save file or creates a new game.
+
+    :return:current board, current player, game mode of X, game mode of O
+    """
+    if sg.is_game_saved() and input("Do you want to load the saved game? (type y/n): ") == "y":
+        return sg.load_game_state()
+    else:
+        print("\nPreparing a new game ... ")
+        return new_board(), 1, 0, 0
 
 
 # TODO time/memory profiling, speed up game-logic
 # TODO write report
 if __name__ == '__main__':
     while True:
-        if sg.is_game_loaded() is True and input("Do you want to continue the loaded game? (type y/n): ") == "y":
-            curr_board, curr_player, player1_game_mode, player2_game_mode = sg.load_game_state()
-        else:
-            print("\nPreparing a new game ... ")
-            curr_board = new_board()
-            curr_player = 1
-            player1_game_mode = 0
-            player2_game_mode = 0
-
-        run(curr_board, int(curr_player), int(player1_game_mode), int(player2_game_mode))
+        run(*get_parameters())

@@ -15,7 +15,7 @@ def save_game_state(curr_board, curr_player, player1_game_mode, player2_game_mod
     save_file.write(f"{player1_game_mode}")
     save_file.write(f"{player2_game_mode}")
     save_file.close()
-    print("Saving successful\n")
+    print("\nSaving successful\n")
 
 
 def is_game_saved():
@@ -37,7 +37,7 @@ def load_game_state():
     """
     loads the saved game state and returns the saved parameter in following order:
 
-    :return: current board, current player, game mode of X, game mode of O
+    :return: current board, current player, game mode of player1, game mode of player2
     """
     save_file = open("save_file.txt", "r")
     file = save_file.readlines()
@@ -47,4 +47,4 @@ def load_game_state():
     curr_player = file[9]
     player1_game_mode = file[10]
     player2_game_mode = file[11]
-    return curr_board, curr_player, player1_game_mode, player2_game_mode
+    return curr_board, int(curr_player), int(player1_game_mode), int(player2_game_mode)
