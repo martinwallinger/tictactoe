@@ -1,5 +1,13 @@
 def save_game_state(curr_board, curr_player, player1_game_mode, player2_game_mode):
-    save_file = open("load.txt", "w")
+    """
+    saves the given game state in a text-file, named save_file.txt
+
+    :param curr_board: current game-board
+    :param curr_player: the player which is to move next
+    :param player1_game_mode: the game mode of X
+    :param player2_game_mode: the game mode of O
+    """
+    save_file = open("save_file.txt", "w")
     for row in curr_board:
         for char in row:
             save_file.writelines(f"{char}")
@@ -10,9 +18,15 @@ def save_game_state(curr_board, curr_player, player1_game_mode, player2_game_mod
     print("Saving successful\n")
 
 
-def is_game_loaded():
-    game_state = open("load.txt", "r")
-    char = game_state.read(1)
+def is_game_saved():
+    """
+    checks if a game is saved
+
+    :return: True or False
+    """
+    save_file = open("save_file.txt", "r")
+    char = save_file.read(1)
+    save_file.close()
     if char:
         return True
     else:
@@ -20,11 +34,16 @@ def is_game_loaded():
 
 
 def load_game_state():
-    save_file = open("load.txt", "r")
+    """
+    loads the saved game state and returns the saved parameter in following order:
+
+    :return: current board, current player, game mode of X, game mode of O
+    """
+    save_file = open("save_file.txt", "r")
     file = save_file.readlines()
     save_file.close()
     file = str(file[0])
-    curr_board = [[file[0], file[1], file[2]],[file[3], file[4], file[5]],[file[6], file[7], file[8]]]
+    curr_board = [[file[0], file[1], file[2]], [file[3], file[4], file[5]], [file[6], file[7], file[8]]]
     curr_player = file[9]
     player1_game_mode = file[10]
     player2_game_mode = file[11]
