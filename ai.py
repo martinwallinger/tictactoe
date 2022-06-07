@@ -180,6 +180,11 @@ def minimax_ai(board, player):
     :param player: the player which is to move
     :return: the best possible move
     """
+
+    if board == [[" ", " ", " "], [" ", " ", " "], [" ", " ", " "]]:
+        # if the board is empty, the chosen move will always be 0, 0
+        return 0, 0
+
     if player == 'X':
         best_score = -100
     else:
