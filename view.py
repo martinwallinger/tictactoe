@@ -42,7 +42,7 @@ def get_move():
     """
     asks human player for next move, checks if format of given input is right.
 
-    :return: move the player has entered as tuple
+    :return: move the player has entered as tuple or "save"
     """
     print("To save the current game state, enter 'save'")
     move = input("What is your next move?")
@@ -54,6 +54,8 @@ def get_move():
         move = input("Please repeat your move as two numbers (0 to 2)"
                      " without whitespaces inbetween: ")
         move.strip()
+        if move == "save":
+            return move
     return int(move[0]), int(move[1])
 
 

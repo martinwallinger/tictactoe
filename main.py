@@ -42,17 +42,15 @@ class Player:
             print("\nPlayer Two:\n")
         if self.game_mode == 1:
             move = view.get_move()
-            if move == "save":
-                return False
         elif self.game_mode == 2:
             move = ai.find_winning_losing_moves(curr_board, curr_player)
         elif self.game_mode == 3:
             move = ai.minimax_ai(curr_board, curr_player)
         else:
             raise ValueError("game mode is invalid")
-        save_move(move, curr_player, curr_board)
+        return_value = save_move(move, curr_player, curr_board)
         view.render(curr_board)
-        return True
+        return bool(return_value)
 
 
 def new_board():
@@ -69,11 +67,15 @@ def save_move(move, current_player, current_board):
     :param move: where the character is to add
     :param current_player: player-character which is to add
     :param current_board: current game-board
-    :return: the new game-board
+    :return: the new game-board or False if move is "save"
     """
+    if move == 'save':
+        return False
     while current_board[move[0]][move[1]] != " ":
         print(F"Square {move} is already taken! Pick another one!")
         move = view.get_move()
+        if move == 'save':
+            return False
     if current_player == 'X':
         current_board[move[0]][move[1]] = "X"
     if current_player == 'O':
