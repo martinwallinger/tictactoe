@@ -7,7 +7,7 @@ Functions:
 
 """
 import random
-import main
+from tictactoe import model
 
 
 def _find_legal_moves(curr_board):
@@ -139,7 +139,7 @@ def _minimax_score(board, player):
     or if the game is in a terminal state:
     10 if X has won, -10 if O has won, 0 if it is a draw
     """
-    winner = main.is_game_over(board)
+    winner = model.is_game_over(board)
     if winner == 'X':
         return 10
     if winner == 'O':

@@ -1,5 +1,5 @@
 """
-handles the saving and loading of the tictactoe game.
+handles the saving, loading and deleting of the tictactoe game.
 provides a method to check if a game is already saved.
 
 Functions:
