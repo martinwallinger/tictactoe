@@ -6,7 +6,7 @@ Classes:
 
 Functions:
     new_board() -> list
-    save_move(int, string, list) -> list
+    save_move(int, string, list) -> list or boolean
     is_game_over(list) -> string or int
     run(list, int, int, int)
     get_parameters() -> (list, int, int, int)
@@ -176,4 +176,8 @@ def get_parameters():
 
 if __name__ == '__main__':
     while True:
-        run(*get_parameters())
+        try:
+            run(*get_parameters())
+        except KeyboardInterrupt:
+            sg.delete_game_state()
+            break

@@ -6,6 +6,7 @@ Functions:
     save_game_state(list, int, int, int)
     is_game_saved() -> boolean
     load_game_state() -> (list, int, int, int)
+    delete_game_state()
 """
 
 
@@ -57,3 +58,12 @@ def load_game_state():
     player1_game_mode = txt[10]
     player2_game_mode = txt[11]
     return curr_board, int(curr_player), int(player1_game_mode), int(player2_game_mode)
+
+
+def delete_game_state():
+    """
+    deletes the data written in the save file.
+    """
+    with open("save_file.txt", "w", encoding="utf-8") as save_file:
+        save_file.write("")
+    print("\n\ngame state deleted\n")
