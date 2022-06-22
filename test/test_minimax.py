@@ -1,3 +1,5 @@
+import pytest
+
 from tictactoe.ai import minimax_ai
 
 
@@ -47,9 +49,20 @@ def test_force_draw():
     assert move == (1, 1)
 
 
+def test_wrong_player():
+    board = [["O", "X", "O"], ["X", " ", "X"], ["O", "X", " "]]
+    player = 'A'
+    with pytest.raises(ValueError) as e:
+        minimax_ai(board, player)
+        assert str(e) == "character given to _make_move() is invalid"
+
+
 def all_tests():
     test_x_with_empty()
     test_o_with_empty()
     test_x_maximize()
     test_o_maximize()
     test_force_draw()
+
+
+all_tests()
