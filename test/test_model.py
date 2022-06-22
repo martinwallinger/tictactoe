@@ -1,7 +1,5 @@
 import tictactoe.view
 from tictactoe import model
-from tictactoe import view
-import pytest_mock
 
 
 class Test:
@@ -73,4 +71,3 @@ class Test:
 
         tictactoe.view.get_move.assert_called_once()
         assert board is False
-
