@@ -66,5 +66,3 @@ def test_board_full():
         minimax_ai(board, player)
         # assert
         assert str(e) == "minimax_ai(): given board full or invalid!"
-
-
