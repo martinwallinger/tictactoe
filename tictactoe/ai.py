@@ -103,8 +103,11 @@ def find_winning_losing_moves(curr_board, curr_player=str):
 
         if hit:
             return move
+    try:
+        return legal_moves[int(random.uniform(0, len(legal_moves)))]
+    except IndexError:
+        raise ValueError("find_winning_losing_moves_ai(): given board full or invalid!")
 
-    return legal_moves[int(random.uniform(0, len(legal_moves)))]
 
 
 def _make_move(board, move, character):
@@ -203,7 +206,10 @@ def minimax_ai(board, player):
             if score < best_score:
                 best_score = score
                 best_move = move
-    return best_move
+
+    if best_move is not None:
+        return best_move
+    raise ValueError("minimax_ai(): given board full or invalid!")
 
 
 def _get_opponent(player):

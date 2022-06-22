@@ -57,12 +57,14 @@ def test_wrong_player():
         assert str(e) == "character given to _make_move() is invalid"
 
 
-def all_tests():
-    test_x_with_empty()
-    test_o_with_empty()
-    test_x_maximize()
-    test_o_maximize()
-    test_force_draw()
+def test_board_full():
+    # arrange
+    board = [["O", "X", "O"], ["X", "X", "X"], ["O", "O", "O"]]
+    player = 'X'
+    # act
+    with pytest.raises(ValueError) as e:
+        minimax_ai(board, player)
+        # assert
+        assert str(e) == "minimax_ai(): given board full or invalid!"
 
 
-all_tests()
