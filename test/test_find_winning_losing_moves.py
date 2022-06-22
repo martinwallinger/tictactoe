@@ -36,13 +36,13 @@ def test_with_x():
 
 def test_with_o():
     # arrange
-    board = [["O", " ", "O"], ["X", " ", "X"], ["O", "X", " "]]
+    board = [["O", "X", " "], ["X", "O", "X"], ["O", "X", "X"]]
     player = 'O'
     # act
     move = find_winning_losing_moves(board, player)
     # assert
     assert isinstance(move, tuple)
-    assert move == (1, 1) or move == (0, 1)
+    assert move == (0, 2)
 
 
 def test_board_full():

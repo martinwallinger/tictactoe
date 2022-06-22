@@ -19,7 +19,7 @@ def save_game_state(curr_board, curr_player, player1_game_mode, player2_game_mod
     :param player1_game_mode: the game mode of X
     :param player2_game_mode: the game mode of O
     """
-    with open("save_file.txt", "w", encoding="utf-8") as save_file:
+    with open("../save_file.txt", "w", encoding="utf-8") as save_file:
         for row in curr_board:
             for char in row:
                 save_file.writelines(f"{char}")
@@ -36,10 +36,10 @@ def is_game_saved():
     :return: True or False
     """
     try:
-        with open("save_file.txt", "r", encoding="utf-8") as save_file:
+        with open("../save_file.txt", "r", encoding="utf-8") as save_file:
             content = save_file.readlines()
     except FileNotFoundError:
-        with open("save_file.txt", "x", encoding="utf-8"):  # creates save file if it doesn't exist
+        with open("../save_file.txt", "x", encoding="utf-8"):  # creates save file if it doesn't exist
             return False
     return bool(content)
 
@@ -50,7 +50,7 @@ def load_game_state():
 
     :return: current board, current player, game mode of player1, game mode of player2
     """
-    with open("save_file.txt", "r", encoding="utf-8") as save_file:
+    with open("../save_file.txt", "r", encoding="utf-8") as save_file:
         txt = save_file.readlines()
     txt = str(txt[0])
     curr_board = [[txt[0], txt[1], txt[2]], [txt[3], txt[4], txt[5]], [txt[6], txt[7], txt[8]]]
@@ -64,6 +64,6 @@ def delete_game_state():
     """
     deletes the data written in the save file.
     """
-    with open("save_file.txt", "w", encoding="utf-8") as save_file:
+    with open("../save_file.txt", "w", encoding="utf-8") as save_file:
         save_file.write("")
     print("\n\ngame state deleted\n")

@@ -109,7 +109,6 @@ def find_winning_losing_moves(curr_board, curr_player=str):
         raise ValueError("find_winning_losing_moves_ai(): given board full or invalid!")
 
 
-
 def _make_move(board, move, character):
     """
     adds the given character on the given board.
