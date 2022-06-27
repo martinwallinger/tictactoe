@@ -2,7 +2,10 @@
 the player file is only carrying the Player class, used to initiate different Players
 
 Classes:
-    Player
+    Player:
+        play(list, string) -> bool
+
+
 """
 from tictactoe import ai
 from tictactoe import view
@@ -28,11 +31,15 @@ class Player:
 
         :param curr_board: current game-board
         :param curr_player: player which is to move
+        :return False if move is "save"
+        :raises ValueError if player or game mode is invalid
         """
         if curr_player == 'X':
             print("\nPlayer One:\n")
-        else:
+        elif curr_player == 'O':
             print("\nPlayer Two:\n")
+        else:
+            raise ValueError("curr_player in player.play() is invalid")
         if self.game_mode == 1:
             move = view.get_move()
         elif self.game_mode == 2:
