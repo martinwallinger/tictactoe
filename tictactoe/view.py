@@ -64,12 +64,15 @@ def print_winner(state):
     Prints the winner or "draw" on the commandline
 
     :param state: 'draw', 'X' or 'O'
+    :raise ValueError if state is invalid
     """
     if state == 'draw':
         print("Game Over! It's a draw")
     else:
         if state == 'X':
             winner = 1
-        else:
+        elif state == 'O':
             winner = 2
+        else:
+            raise ValueError("state provided to print_winner() is invalid ")
         print(F'\nGame Over! Player {winner} has won!')
