@@ -137,9 +137,7 @@ def _minimax_score(board, player):
 
     :param board: the game-state to be analyzed
     :param player: the player which is to move
-    :return: the best score which is possible with the given board,
-    or if the game is in a terminal state:
-    10 if X has won, -10 if O has won, 0 if it is a draw
+    :return: the best score which is possible with the given board, or if the game is in a terminal state: 10 if X has won, -10 if O has won, 0 if it is a draw
     """
     winner = model.is_game_over(board)
     if winner == 'X':
